@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Password Security Analyzer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="card">
+  <h1>🔐 Password Security Analyzer</h1>
+  <p class="subtitle">Check how strong your password really is</p>
+
+  <div class="input-group">
+    <input 
+      type="password" 
+      id="password" 
+      placeholder="Enter your password"
+      oninput="checkPassword()"
+    >
+    <button class="eye-btn" onclick="togglePassword()">👁️</button>
+  </div>
+
+  <div id="strength" class="strength-text"></div>
+
+  <div class="progress">
+    <div id="strength-bar"></div>
+  </div>
+
+  <ul id="tips"></ul>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
