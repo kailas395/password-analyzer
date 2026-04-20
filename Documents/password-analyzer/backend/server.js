@@ -4,13 +4,12 @@ const cors = require("cors");
 
 const app = express();
 
-// ✅ Allow all origins (for now, safe for your project)
 app.use(cors());
 app.use(express.json());
 
 let oldPasswords = [];
 
-// Strength function
+// ✅ Strength function
 function calculateStrength(password) {
   let score = 0;
 
@@ -27,7 +26,7 @@ function calculateStrength(password) {
   return { score, strength };
 }
 
-// API route
+// ✅ API route
 app.post("/check-password", async (req, res) => {
   const { password } = req.body;
 
@@ -37,35 +36,37 @@ app.post("/check-password", async (req, res) => {
 
   const { score, strength } = calculateStrength(password);
 
-  // Check reuse
+  // 🔥 Check reuse
+  let reused = false;
+
   for (let hash of oldPasswords) {
     const match = await bcrypt.compare(password, hash);
     if (match) {
-      return res.json({
-        strength: "Weak",
-        score: 0,
-        message: "Password already used ⚠️"
-      });
+      reused = true;
+      break;
     }
   }
 
-  // Hash and store
+  // 🔐 Store password
   const hashed = await bcrypt.hash(password, 10);
   oldPasswords.push(hashed);
 
+  // ✅ Send correct response
   res.json({
     strength,
     score,
-    message: "Secure password ✅"
+    reused,
+    message: reused
+      ? "Password already used ⚠️"
+      : "Secure password ✅"
   });
 });
 
-// Health check route (IMPORTANT for Render)
+// Health check
 app.get("/", (req, res) => {
   res.send("API is running 🚀");
 });
 
-// ✅ PORT fix for Render
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
