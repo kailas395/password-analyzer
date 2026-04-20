@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Password Analyzer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+  <h1>🔐 Password Analyzer</h1>
+
+  <div class="input-box">
+    <input type="password" id="password" placeholder="Enter your password">
+    <span onclick="togglePassword()">👁️</span>
+  </div>
+
+  <button onclick="checkPassword()">Analyze</button>
+
+  <div id="strength"></div>
+
+  <div class="bar-container">
+    <div id="strength-bar"></div>
+  </div>
+
+  <ul id="tips"></ul>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
